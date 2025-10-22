@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Test Suite</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .header p {
+        opacity: 0.9;
+        font-size: 1rem;
+      }
+
+      .test-controls {
+        padding: 2rem;
+        background: #f8f9fa;
+        border-bottom: 2px solid #e9ecef;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .url-input {
+        flex: 1;
+        min-width: 300px;
+        padding: 0.75rem 1rem;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .url-input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .results {
+        padding: 2rem;
+      }
+
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .summary-card {
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .summary-card.total {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .summary-card.passed {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+      }
+
+      .summary-card.failed {
+        background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+        color: white;
+      }
+
+      .summary-card h3 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .summary-card p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .test-group {
+        margin-bottom: 2rem;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .test-group-header {
+        background: #f8f9fa;
+        padding: 1rem 1.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #495057;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .test-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.3s;
+      }
+
+      .test-item:last-child {
+        border-bottom: none;
+      }
+
+      .test-item:hover {
+        background: #f8f9fa;
+      }
+
+      .test-name {
+        flex: 1;
+        font-size: 0.95rem;
+        color: #495057;
+      }
+
+      .test-status {
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .test-status.pass {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .test-status.fail {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .test-details {
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        color: #856404;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 3rem;
+        color: #6c757d;
+      }
+
+      .loading::after {
+        content: "...";
+        animation: dots 1.5s steps(4, end) infinite;
+      }
+
+      @keyframes dots {
+        0%,
+        20% {
+          content: ".";
+        }
+        40% {
+          content: "..";
+        }
+        60%,
+        100% {
+          content: "...";
+        }
+      }
+
+      .error-message {
+        padding: 1rem;
+        background: #f8d7da;
+        border-left: 4px solid #dc3545;
+        border-radius: 4px;
+        color: #721c24;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        .header h1 {
+          font-size: 1.5rem;
+        }
+
+        .test-controls {
+          flex-direction: column;
+        }
+
+        .url-input {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🧪 Portfolio Test Suite</h1>
+        <p>Automated testing for HNG Stage 1 requirements</p>
+      </div>
+
+      <div class="test-controls">
+        <input
+          type="text"
+          id="urlInput"
+          class="url-input"
+          placeholder="Enter your portfolio URL (e.g., https://yourportfolio.com)"
+          value=""
+        />
+        <button id="runTests" class="btn btn-primary">Run Tests</button>
+      </div>
+
+      <div class="results" id="results">
+        <div class="loading">Ready to test! Enter your URL above</div>
+      </div>
+    </div>
+
+    <script>
+      const testSuites = {
+        home: [
+          {
+            name: "Current time element exists",
+            selector: '[data-testid="test-user-time"]',
+          },
+          {
+            name: "User bio exists",
+            selector: '[data-testid="test-user-bio"]',
+          },
+          {
+            name: "Social links container exists",
+            selector: '[data-testid="test-user-social-links"]',
+          },
+          {
+            name: "GitHub link exists",
+            selector: '[data-testid="test-user-social-github"]',
+          },
+          {
+            name: "X/Twitter link exists",
+            selector: '[data-testid="test-user-social-x"]',
+          },
+          {
+            name: "LinkedIn link exists",
+            selector: '[data-testid="test-user-social-linkedin"]',
+          },
+        ],
+        about: [
+          {
+            name: "About page exists",
+            selector: '[data-testid="test-about-page"]',
+          },
+          {
+            name: "Bio section exists",
+            selector: '[data-testid="test-about-bio"]',
+          },
+          {
+            name: "Goals section exists",
+            selector: '[data-testid="test-about-goals"]',
+          },
+          {
+            name: "Low confidence section exists",
+            selector: '[data-testid="test-about-confidence"]',
+          },
+          {
+            name: "Future note section exists",
+            selector: '[data-testid="test-about-future-note"]',
+          },
+          {
+            name: "Extra thoughts section exists",
+            selector: '[data-testid="test-about-extra"]',
+          },
+          {
+            name: "About page uses <main> tag",
+            selector: 'main[data-testid="test-about-page"]',
+          },
+        ],
+        contact: [
+          {
+            name: "Name input exists",
+            selector: '[data-testid="test-contact-name"]',
+          },
+          {
+            name: "Email input exists",
+            selector: '[data-testid="test-contact-email"]',
+          },
+          {
+            name: "Subject input exists",
+            selector: '[data-testid="test-contact-subject"]',
+          },
+          {
+            name: "Message textarea exists",
+            selector: '[data-testid="test-contact-message"]',
+          },
+          {
+            name: "Submit button exists",
+            selector: '[data-testid="test-contact-submit"]',
+          },
+          {
+            name: "Name error element exists",
+            selector: '[data-testid="test-contact-error-name"]',
+          },
+          {
+            name: "Email error element exists",
+            selector: '[data-testid="test-contact-error-email"]',
+          },
+          {
+            name: "Subject error element exists",
+            selector: '[data-testid="test-contact-error-subject"]',
+          },
+          {
+            name: "Message error element exists",
+            selector: '[data-testid="test-contact-error-message"]',
+          },
+          {
+            name: "Success message exists",
+            selector: '[data-testid="test-contact-success"]',
+          },
+        ],
+        accessibility: [
+          {
+            name: "Name input has label",
+            check: (doc) => {
+              const input = doc.querySelector(
+                '[data-testid="test-contact-name"]'
+              );
+              return (
+                input &&
+                input.id &&
+                doc.querySelector(`label[for="${input.id}"]`)
+              );
+            },
+          },
+          {
+            name: "Email input has label",
+            check: (doc) => {
+              const input = doc.querySelector(
+                '[data-testid="test-contact-email"]'
+              );
+              return (
+                input &&
+                input.id &&
+                doc.querySelector(`label[for="${input.id}"]`)
+              );
+            },
+          },
+          {
+            name: "Subject input has label",
+            check: (doc) => {
+              const input = doc.querySelector(
+                '[data-testid="test-contact-subject"]'
+              );
+              return (
+                input &&
+                input.id &&
+                doc.querySelector(`label[for="${input.id}"]`)
+              );
+            },
+          },
+          {
+            name: "Message textarea has label",
+            check: (doc) => {
+              const input = doc.querySelector(
+                '[data-testid="test-contact-message"]'
+              );
+              return (
+                input &&
+                input.id &&
+                doc.querySelector(`label[for="${input.id}"]`)
+              );
+            },
+          },
+          {
+            name: "Name input has aria-describedby",
+            check: (doc) => {
+              const input = doc.querySelector(
+                '[data-testid="test-contact-name"]'
+              );
+              return input && input.hasAttribute("aria-describedby");
+            },
+          },
+          {
+            name: "Email input has aria-describedby",
+            check: (doc) => {
+              const input = doc.querySelector(
+                '[data-testid="test-contact-email"]'
+              );
+              return input && input.hasAttribute("aria-describedby");
+            },
+          },
+          {
+            name: "Images have alt text",
+            check: (doc) => {
+              const images = doc.querySelectorAll("img");
+              return Array.from(images).every((img) => img.hasAttribute("alt"));
+            },
+          },
+        ],
+        semantic: [
+          { name: "Uses semantic <header> tag", selector: "header" },
+          { name: "Uses semantic <nav> tag", selector: "nav" },
+          { name: "Uses semantic <main> tag", selector: "main" },
+          { name: "Uses semantic <section> tags", selector: "section" },
+          {
+            name: "About page sections use <section>",
+            check: (doc) => {
+              const aboutPage = doc.querySelector(
+                '[data-testid="test-about-page"]'
+              );
+              return (
+                aboutPage && aboutPage.querySelectorAll("section").length >= 5
+              );
+            },
+          },
+        ],
+      };
+
+      async function runAllTests() {
+        const url = document.getElementById("urlInput").value.trim();
+        const resultsDiv = document.getElementById("results");
+        const runButton = document.getElementById("runTests");
+
+        if (!url) {
+          resultsDiv.innerHTML =
+            '<div class="error-message">⚠️ Please enter a valid URL</div>';
+          return;
+        }
+
+        runButton.disabled = true;
+        resultsDiv.innerHTML =
+          '<div class="loading">Running tests, please wait</div>';
+
+        try {
+          // Note: This is a client-side test that requires CORS to be enabled
+          // For local testing, you can use a CORS proxy or test locally
+          const response = await fetch(url);
+          const html = await response.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+
+          const results = {};
+          let totalTests = 0;
+          let passedTests = 0;
+
+          for (const [category, tests] of Object.entries(testSuites)) {
+            results[category] = [];
+
+            for (const test of tests) {
+              totalTests++;
+              let passed = false;
+              let details = "";
+
+              if (test.selector) {
+                const element = doc.querySelector(test.selector);
+                passed = !!element;
+                if (!passed) {
+                  details = `Element not found: ${test.selector}`;
+                }
+              } else if (test.check) {
+                try {
+                  passed = test.check(doc);
+                  if (!passed) {
+                    details = "Check failed";
+                  }
+                } catch (e) {
+                  passed = false;
+                  details = `Error: ${e.message}`;
+                }
+              }
+
+              if (passed) passedTests++;
+
+              results[category].push({
+                name: test.name,
+                passed,
+                details,
+              });
+            }
+          }
+
+          displayResults(results, totalTests, passedTests);
+        } catch (error) {
+          resultsDiv.innerHTML = `
+                    <div class="error-message">
+                        <strong>❌ Error:</strong> ${error.message}<br><br>
+                        <strong>Note:</strong> If testing a remote URL, make sure:
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li>The URL is accessible and public</li>
+                            <li>CORS is enabled on your server</li>
+                            <li>Or use this test locally by opening your HTML file</li>
+                        </ul>
+                    </div>
+                `;
+        } finally {
+          runButton.disabled = false;
+        }
+      }
+
+      function displayResults(results, total, passed) {
+        const failed = total - passed;
+        const percentage = ((passed / total) * 100).toFixed(1);
+
+        let html = `
+                <div class="summary">
+                    <div class="summary-card total">
+                        <h3>${total}</h3>
+                        <p>Total Tests</p>
+                    </div>
+                    <div class="summary-card passed">
+                        <h3>${passed}</h3>
+                        <p>Passed (${percentage}%)</p>
+                    </div>
+                    <div class="summary-card failed">
+                        <h3>${failed}</h3>
+                        <p>Failed</p>
+                    </div>
+                </div>
+            `;
+
+        for (const [category, tests] of Object.entries(results)) {
+          const categoryPassed = tests.filter((t) => t.passed).length;
+          const categoryTotal = tests.length;
+
+          html += `
+                    <div class="test-group">
+                        <div class="test-group-header">
+                            <span>${category.toUpperCase()}</span>
+                            <span>${categoryPassed}/${categoryTotal} passed</span>
+                        </div>
+                `;
+
+          for (const test of tests) {
+            html += `
+                        <div class="test-item">
+                            <div class="test-name">
+                                ${test.name}
+                                ${
+                                  test.details
+                                    ? `<div class="test-details">${test.details}</div>`
+                                    : ""
+                                }
+                            </div>
+                            <span class="test-status ${
+                              test.passed ? "pass" : "fail"
+                            }">
+                                ${test.passed ? "✓ Pass" : "✗ Fail"}
+                            </span>
+                        </div>
+                    `;
+          }
+
+          html += "</div>";
+        }
+
+        document.getElementById("results").innerHTML = html;
+      }
+
+      // Event listeners
+      document
+        .getElementById("runTests")
+        .addEventListener("click", runAllTests);
+      document.getElementById("urlInput").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          runAllTests();
+        }
+      });
+
+      // For local testing, auto-detect if running from same origin
+      if (window.location.protocol === "file:") {
+        document.getElementById("urlInput").value = "index.html";
+        document.getElementById("urlInput").placeholder =
+          "Enter relative path (e.g., index.html)";
+      }
+    </script>
+  </body>
+</html>
