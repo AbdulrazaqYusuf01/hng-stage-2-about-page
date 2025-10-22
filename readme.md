@@ -117,8 +117,6 @@ npx http-server
 
 ## 🧪 Testing
 
-### Manual Testing
-
 1. **Navigation Testing**
 
    - Click through all navigation links (Home, About, Contact)
@@ -142,15 +140,6 @@ npx http-server
    - Navigate entire site using only keyboard (Tab, Enter)
    - Verify focus indicators are visible
    - Check that form errors are announced properly
-
-### Automated Testing
-
-For detailed test results, see **[TESTING.md](./TESTING.md)** which includes:
-
-- ✅ 120+ test cases passed
-- 📱 6 responsive breakpoints validated
-- ♿ WCAG AA accessibility compliance
-- 🌍 Cross-browser compatibility (Chrome, Edge, Firefox)
 
 ---
 
@@ -224,94 +213,10 @@ For detailed test results, see **[TESTING.md](./TESTING.md)** which includes:
 
 ---
 
-## 🔑 Key Learning Outcomes
-
-Through building this project, I've gained hands-on experience with:
-
-✅ **Semantic HTML5** — Proper use of `<header>`, `<nav>`, `<main>`, `<section>` tags  
-✅ **CSS Architecture** — Custom properties, mobile-first design, 6 media queries  
-✅ **Form Validation** — Client-side validation with real-time error feedback  
-✅ **Accessibility** — ARIA attributes, keyboard navigation, screen reader support  
-✅ **Responsive Design** — Flexbox layouts that adapt seamlessly across devices  
-✅ **JavaScript DOM Manipulation** — Event handling, form validation logic  
-✅ **Hash-based Routing** — Single-page navigation without page reloads  
-✅ **Animation & Transitions** — Smooth user interactions with CSS keyframes
-
----
-
-## 💡 Future Enhancements
-
-While the project meets all Stage 1 requirements, I'm planning these improvements:
-
-🔄 **Backend Integration**
-
-- Connect form to actual email service (SendGrid, Nodemailer)
-- Store form submissions in database
-- Add CAPTCHA for spam prevention
-
-🎨 **Design Upgrades**
-
-- Dark/light mode toggle with theme persistence
-- More sophisticated page transition animations
-- Add a projects/portfolio showcase section
-
-⚡ **Performance**
-
-- Image lazy loading
-- CSS/JS minification
-- Progressive Web App (PWA) conversion
-
-🧪 **Testing**
-
-- Unit tests for form validation logic
-- E2E tests with Cypress or Playwright
-- Lighthouse performance audits
-
-🚀 **Technology Migration**
-
-- Rebuild with React + TypeScript
-- Use Next.js for SSR/SSG capabilities
-- Implement Tailwind CSS for faster styling
-
----
-
-## 🏆 HNG Internship Journey
-
-This project is part of my journey through the **HNG Internship** program — a remote internship designed to help developers grow their skills while working on real-world projects.
-
-### Why HNG?
-
-The HNG internship provides hands-on experience, mentorship, and the opportunity to collaborate with talented developers across Africa and beyond. It's not just about learning to code; it's about building production-ready applications and developing professional skills.
-
-**Learn more:**
-
-- 🌐 [HNG Internship Website](https://hng.tech/internship)
-- 💼 [Hire HNG Developers](https://hng.tech/hire)
-
----
-
 ## 📱 Live Demo
 
 **🌐 View Live:** [Coming Soon]  
 **📁 Repository:** [GitHub Link](https://github.com/AbdulrazaqYusuf01/hng-portfolio-stage1)
-
----
-
-## 🤝 Contributing
-
-While this is a personal project for the HNG internship, I welcome feedback and suggestions!
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/improvement`)
-3. Commit your changes (`git commit -m 'Add some improvement'`)
-4. Push to the branch (`git push origin feature/improvement`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
@@ -328,28 +233,6 @@ _Frontend Developer | Aspiring Software & AI Engineer_
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/abdulrazaq-m-yusuf)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AbdulrazaqYusuf01)
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/AbdulrazaqYM)
-
----
-
-## 🙏 Acknowledgments
-
-- **HNG Internship** — For providing this amazing learning opportunity
-- **FontAwesome** — For the beautiful social media icons
-- **MDN Web Docs** — Invaluable resource for web development learning
-- **W3C** — For web standards and validation tools
-
----
-
-## 📊 Project Stats
-
-![HTML](https://img.shields.io/badge/HTML5-60%25-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS3-35%25-1572B6?style=flat-square&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-5%25-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-
-**Lines of Code:** ~1,200+  
-**Files:** 4 (HTML, CSS, JS, TESTING.md)  
-**Test Coverage:** 120+ manual test cases  
-**Performance:** ~1.2s load time
 
 ---
 
