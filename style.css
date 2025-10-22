@@ -39,16 +39,82 @@ header {
   justify-content: space-evenly;
   height: 10%;
   gap: 40%;
+  padding: 1rem 2rem;
   background: var(--bg-card);
   border-bottom: 0.1rem solid rgba(99, 102, 241, 0.2);
   justify-content: center;
   width: 100%;
 }
 
-/* header div {
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: center;
+  width: 25px;
+  height: 18px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: 0.4s;
+}
+
+/* Overlay default state */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
   display: flex;
+  justify-content: center;
   align-items: center;
-} */
+  flex-direction: column;
+  transform: translateY(-100%);
+  transition: transform 0.4s ease-in-out;
+  z-index: 15;
+}
+
+.overlay.active {
+  transform: translateY(0);
+}
+
+.overlay-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.8rem;
+  margin: 15px 0;
+  transition: color 0.3s;
+}
+
+.overlay-nav a:hover {
+  color: #00bcd4;
+}
+
+/* Hamburger active state animation */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header nav.nav-links {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
 
 /* Navigation */
 nav {

@@ -170,60 +170,50 @@ form.addEventListener("submit", (e) => {
   }
 });
 
-// Hamburger Menu Functionality
-document.addEventListener("DOMContentLoaded", function () {
-  const menuToggle = document.querySelector(".menu-toggle");
-  const navMenu = document.querySelector("nav ul");
-  const menuOverlay = document.querySelector(".menu-overlay");
-  const navLinks = document.querySelectorAll(".nav-link");
+/* Hamburger menu implementation */
+const hamburger = document.getElementById("hamburger");
+const overlay = document.getElementById("overlay");
 
-  // Toggle menu
-  function toggleMenu() {
-    menuToggle.classList.toggle("active");
-    navMenu.classList.toggle("active");
-    menuOverlay.classList.toggle("active");
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  overlay.classList.toggle("active");
 
-    // Update aria-expanded for accessibility
-    const isExpanded = menuToggle.classList.contains("active");
-    menuToggle.setAttribute("aria-expanded", isExpanded);
+  // Accessibility
+  const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
+  hamburger.setAttribute("aria-expanded", !expanded);
+});
 
-    // Prevent body scroll when menu is open
-    if (isExpanded) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }
-
-  // Close menu
-  function closeMenu() {
-    menuToggle.classList.remove("active");
-    navMenu.classList.remove("active");
-    menuOverlay.classList.remove("active");
-    menuToggle.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
-  }
-
-  // Event Listeners
-  menuToggle.addEventListener("click", toggleMenu);
-  menuOverlay.addEventListener("click", closeMenu);
-
-  // Close menu when clicking a nav link
-  navLinks.forEach((link) => {
-    link.addEventListener("click", closeMenu);
+// Close overlay when a link is clicked
+document.querySelectorAll(".overlay-nav a").forEach((link) => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    overlay.classList.remove("active");
+    hamburger.setAttribute("aria-expanded", "false");
   });
+});
 
-  // Close menu on Escape key
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && navMenu.classList.contains("active")) {
-      closeMenu();
-    }
-  });
+// Ensure clicking overlay links triggers your page switch logic
+document.querySelectorAll(".overlay-nav .nav-link").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const targetPage = link.getAttribute("data-page");
 
-  // Close menu when resizing to desktop view
-  window.addEventListener("resize", function () {
-    if (window.innerWidth > 768 && navMenu.classList.contains("active")) {
-      closeMenu();
-    }
+    // Hide all pages
+    document.querySelectorAll(".page").forEach((page) => {
+      page.classList.remove("active");
+    });
+
+    // Deactivate all nav links
+    document.querySelectorAll(".nav-link").forEach((nav) => {
+      nav.classList.remove("active");
+    });
+
+    // Activate the clicked section
+    document.getElementById(targetPage).classList.add("active");
+    link.classList.add("active");
+
+    // Close overlay
+    hamburger.classList.remove("active");
+    overlay.classList.remove("active");
   });
 });
