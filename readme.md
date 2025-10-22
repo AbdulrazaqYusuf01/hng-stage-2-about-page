@@ -349,7 +349,6 @@ _Frontend Developer | Aspiring Software & AI Engineer_
 **Lines of Code:** ~1,200+  
 **Files:** 4 (HTML, CSS, JS, TESTING.md)  
 **Test Coverage:** 120+ manual test cases  
-**Accessibility Score:** WCAG AA Compliant  
 **Performance:** ~1.2s load time
 
 ---
