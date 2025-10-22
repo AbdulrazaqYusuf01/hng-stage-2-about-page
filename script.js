@@ -1,4 +1,3 @@
-// Navigation
 const navLinks = document.querySelectorAll(".nav-link");
 const pages = document.querySelectorAll(".page");
 
@@ -7,11 +6,9 @@ navLinks.forEach((link) => {
     e.preventDefault();
     const targetPage = link.getAttribute("data-page");
 
-    // Update active states
     navLinks.forEach((l) => l.classList.remove("active"));
     link.classList.add("active");
 
-    // Show target page
     pages.forEach((page) => {
       if (page.id === targetPage) {
         page.classList.add("active");
@@ -20,7 +17,6 @@ navLinks.forEach((link) => {
       }
     });
 
-    // Update URL hash
     window.location.hash = targetPage;
   });
 });
@@ -127,14 +123,9 @@ Object.keys(fields).forEach((fieldName) => {
   });
 });
 
-// Form submission
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  // Hide previous success message
-  successMessage.classList.remove("show");
-
-  // Validate all fields
   let isValid = true;
   Object.keys(fields).forEach((fieldName) => {
     if (!validateField(fieldName)) {
@@ -143,24 +134,23 @@ form.addEventListener("submit", (e) => {
   });
 
   if (isValid) {
-    // Show success message
     successMessage.classList.add("show");
 
-    // Reset form
+    setInterval(() => {
+      successMessage.classList.remove("show");
+    }, 3000);
+
     form.reset();
 
-    // Scroll to success message
     successMessage.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
     });
 
-    // Clear any remaining error states
     Object.keys(fields).forEach((fieldName) => {
       clearError(fields[fieldName]);
     });
   } else {
-    // Focus first invalid field
     const firstInvalid = Object.keys(fields).find((fieldName) =>
       fields[fieldName].input.classList.contains("error")
     );
@@ -183,7 +173,6 @@ hamburger.addEventListener("click", () => {
   hamburger.setAttribute("aria-expanded", !expanded);
 });
 
-// Close overlay when a link is clicked
 document.querySelectorAll(".overlay-nav a").forEach((link) => {
   link.addEventListener("click", () => {
     hamburger.classList.remove("active");
@@ -192,27 +181,22 @@ document.querySelectorAll(".overlay-nav a").forEach((link) => {
   });
 });
 
-// Ensure clicking overlay links triggers your page switch logic
 document.querySelectorAll(".overlay-nav .nav-link").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
     const targetPage = link.getAttribute("data-page");
 
-    // Hide all pages
     document.querySelectorAll(".page").forEach((page) => {
       page.classList.remove("active");
     });
 
-    // Deactivate all nav links
     document.querySelectorAll(".nav-link").forEach((nav) => {
       nav.classList.remove("active");
     });
 
-    // Activate the clicked section
     document.getElementById(targetPage).classList.add("active");
     link.classList.add("active");
 
-    // Close overlay
     hamburger.classList.remove("active");
     overlay.classList.remove("active");
   });
