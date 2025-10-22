@@ -56,17 +56,17 @@ header {
   flex-direction: column;
   justify-content: space-between;
   align-self: center;
-  width: 25px;
-  height: 18px;
+  width: 2.5rem;
+  height: 1.8rem;
   cursor: pointer;
   z-index: 20;
 }
 
 .hamburger span {
   display: block;
-  height: 3px;
+  height: 0.3rem;
   background: #fff;
-  border-radius: 2px;
+  border-radius: 0.2rem;
   transition: 0.4s;
 }
 
@@ -102,13 +102,13 @@ header {
 
 /* Hamburger active state animation */
 .hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: rotate(45deg) translate(0.5rem, 0.5rem);
 }
 .hamburger.active span:nth-child(2) {
   opacity: 0;
 }
 .hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  transform: rotate(-45deg) translate(0.5rem, -0.5rem);
 }
 
 /* Responsive */
@@ -231,7 +231,7 @@ nav a.active {
 
 /* Container */
 .container {
-  max-width: 1200px;
+  max-width: 120rem;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -249,7 +249,7 @@ nav a.active {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(2rem);
   }
   to {
     opacity: 1;
